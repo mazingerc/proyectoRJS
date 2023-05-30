@@ -1,0 +1,42 @@
+.navbar {
+    background-color: rgb(204, 40, 57);
+
+    .navbar_container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px 0;
+     
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .navbar_logo {
+        font-size: 40px;
+        font-weight: 700;
+        color: white;
+      }
+
+        .navbar_nav {
+          display: flex;
+          align-items: center;
+
+          .navbar_link {
+            margin: 0 40px;
+            color: white;
+            font-size: 18px;
+            text-transform: uppercase;
+            text-decoration: none;
+          }    
+          
+          .material-symbols-outlined {
+            color: white;
+          }
+        }
+    }
+  }
+  
+  
+  
+ 
+  
+  
