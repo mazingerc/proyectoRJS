@@ -1,22 +1,28 @@
-import './Navbar.scss'
-import logo from '../../assets/logo.png'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './Navbar.scss';
+import logo from '../../assets/logo.png';
+import CartWidget from './CartWidget';
 
 const Navbar = () => {
-    return (
-        <navbar className="navbar">
-            <div className="navbar_container">
-                <img src={logo} alt='logo'/>
+  return (
+    <nav className="navbar">
+      <div className="navbar_container">
+        <Link to="/">
+          <img src={logo} alt="logo" />
+        </Link>
 
-                <nav className="navbar_nav">
-                    <a className="navbar_link" href="#">eastern</a>
-                    <a className="navbar_link" href="#">western</a>
-                    <a className="navbar_link" href="#">outlet</a>
-                    <span class="material-symbols-outlined">shopping_cart</span>
-                    <span class="material-symbols-outlined">counter_4</span>
-                </nav>
-            </div>
-        </navbar>
-    )
-}
+        <nav className="navbar_nav">
+          <Link to="/eastern" className="navbar_link">Eastern</Link>
+          <Link to="/western" className="navbar_link">Western</Link>
+          <Link to="/outlet" className="navbar_link">Outlet</Link>
+          <div className="cart-container">
+            <CartWidget />
+          </div>
+        </nav>
+      </div>
+    </nav>
+  );
+};
 
-export default Navbar
+export default Navbar;
