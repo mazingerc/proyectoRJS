@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { auth } from '..components/firebase'; 
+import { auth } from '../services/firebase'; 
 
 function RegistroForm() {
   const [email, setEmail] = useState('');
