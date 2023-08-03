@@ -1,30 +1,34 @@
-import { useState } from "react";
-import ItemCount from "../ItemCount/ItemCount";
-import { Link } from "react-router-dom";
-import { CarritoContext } from "../../context/CarritoContext"
-import { useContext } from "react";
-import './ItemDetail.css'
+import React, { useState, useContext } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { productos } from '../../components/Productos/Productos';
+import { CarritoContext } from '../../context/CarritoContext';
+import './ItemDetail.css';
 
-const ItemDetail = ({ id, nombre, precio, img, stock }) => {
-  const [agregarCantidad, setAgregarCantidad] = useState(0);
+const ItemDetail = () => {
+  const { id } = useParams();
+  const { agregarProducto } = useContext(CarritoContext);
+  const producto = productos.find((prod) => prod.id === parseInt(id));
 
-	const {agregarProducto} = useContext(CarritoContext);
+  const [cantidad, setCantidad] = useState(1);
 
-  const manejadorCantidad = (cantidad) => {
-    setAgregarCantidad(cantidad);
-    const item = {id, nombre, precio};
-		agregarProducto(item, cantidad);
+  const handleAgregar = () => {
+    agregarProducto(producto, cantidad);
   };
 
   return (
     <div className="contenedorItem">
-      <h2>Nombre: {nombre}</h2>
-      <h3>Precio: $ {precio}</h3>
-      <h3>ID: {id}</h3>
-      <p>Producto solo para perros</p>
-      <img src={img} alt={nombre} />
-      {agregarCantidad > 0 ? (<Link className="miBtn" to="/cart"> Finalizar Compra </Link>) : (<ItemCount inicial={1} stock={stock} funcionAgregar={manejadorCantidad} />)
-      }
+      <h2>Nombre: {producto.nombre}</h2>
+      <h3>Precio: $ {producto.precio}</h3>
+      <h3>ID: {producto.id}</h3>
+      <img src={producto.imagen} alt={producto.nombre} />
+      <div className="contenedorBotones">
+        <button onClick={() => setCantidad(cantidad > 1 ? cantidad - 1 : 1)} className="botonCantidad">-</button>
+        <span className="cantidad">{cantidad}</span>
+        <button onClick={() => setCantidad(cantidad + 1)} className="botonCantidad">+</button>
+      </div>
+      <button onClick={handleAgregar} className="miBtn"> Agregar al carrito </button>
+      <a href="/checkout">{cantidad > 0 && (<button className="miBtn" to="/cart"> Finalizar Compra </button>)}</a>
+      <a href="/"><button className="miBtn" to="/"> Volver al catálogo </button></a>
     </div>
   );
 };

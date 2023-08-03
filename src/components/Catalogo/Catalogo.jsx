@@ -1,37 +1,37 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { productos } from '../../components/Productos/Productos';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import './Catalogo.css';
+import { Link } from 'react-router-dom';
 
+function Catalogo({ tipo }) {
+  let filteredProductos = productos;
+  let titulo = 'Catálogo de Gorras';
 
-function Catalogo() {
+  if (tipo !== 'Todos') {
+    filteredProductos = productos.filter((producto) => producto.tipo === tipo);
+    titulo = `Gorras ${tipo} Conference`;
+  }
+  const centerTextStyle = {
+    textAlign: 'center',
+  };
   return (
-    <div>
-      <h1>Catálogo de Gorras</h1>
-      <div>
-        <h2>Eastern Conference</h2>
-        {productos
-          .filter((producto) => producto.tipo === 'Eastern')
-          .map((producto) => (
-            <div key={producto.id}>
-              <h3>{producto.nombre}</h3>
-              <img src={producto.imagen} alt={producto.nombre} />
-              <p>Tipo: {producto.tipo}</p>
-              <Link to={`/producto/${producto.id}`}>Ver detalle</Link>
-            </div>
-          ))}
-      </div>
-      <div>
-        <h2>Western Conference</h2>
-        {productos
-          .filter((producto) => producto.tipo === 'Western')
-          .map((producto) => (
-            <div key={producto.id}>
-              <h3>{producto.nombre}</h3>
-              <img src={producto.imagen} alt={producto.nombre} />
-              <p>Tipo: {producto.tipo}</p>
-              <Link to={`/producto/${producto.id}`}>Ver detalle</Link>
-            </div>
-          ))}
+    <div style={centerTextStyle}>
+      <h1>{titulo}</h1>
+      <div className="card-container">
+        {filteredProductos.map((producto) => (
+          <Card key={producto.id} style={{ width: '18rem' }}>
+            <Card.Img variant="top" src={producto.imagen} alt={producto.nombre} />
+            <Card.Body>
+              <Card.Title>{producto.nombre}</Card.Title>
+              <Card.Text style={{ fontSize: '14px' }}>Tipo: {producto.tipo}</Card.Text>
+              <Link to={`/producto/${producto.id}`}>
+                <Button variant="primary" className="btn-sm">Ver detalle</Button>
+              </Link>
+            </Card.Body>
+          </Card>
+        ))}
       </div>
     </div>
   );

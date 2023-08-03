@@ -9,13 +9,13 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar_container">
         <Link to="/">
-          <img src={logo} alt="logo" />
+          <img src={logo} alt="logo" style={{ width: "100px", height: "100px" }} />
         </Link>
 
         <nav className="navbar_nav">
-          <Link to="/eastern" className="navbar_link">Eastern</Link>
-          <Link to="/western" className="navbar_link">Western</Link>
-          <Link to="/outlet" className="navbar_link">Outlet</Link>
+          <Link to="/catalogo/eastern" className="navbar_link">Eastern</Link>
+          <Link to="/catalogo/western" className="navbar_link">Western</Link>
+          {/* <Link to="/outlet" className="navbar_link">Outlet</Link> */}
           <div className="cart-container">
             <CartWidget />
           </div>

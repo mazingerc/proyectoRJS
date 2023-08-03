@@ -3,7 +3,7 @@
 	flex-direction: column;
 	align-items: center;
 	padding: 2rem;
-	box-shadow: 0 2px 4px  rgb(204, 40, 57);
+	box-shadow: 0 4px 8px  rgb(40, 100, 204);
 	border-radius: 5px;
 	margin: 3rem;
 	max-width: 300px;
@@ -25,6 +25,7 @@
 	font-size: 1rem;
 	line-height: 1.5;
 	margin-bottom: 2rem;
+	padding: 2rem;
 }
 
 .contenedorItem img {

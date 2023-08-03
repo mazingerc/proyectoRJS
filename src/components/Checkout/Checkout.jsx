@@ -1,8 +1,9 @@
 import { useState, useContext } from "react";
 import { CarritoContext } from "../../context/CarritoContext";
-import { db } from "../../services/config";
+import { db } from "../services/config";
 import { collection, addDoc } from "firebase/firestore";
-import './Checkout.css'
+import { Modal, Button } from "react-bootstrap";
+import "./Checkout.css";
 
 const Checkout = () => {
   const [nombre, setNombre] = useState("");
@@ -45,12 +46,22 @@ const Checkout = () => {
     addDoc(collection(db, "ordenes"), orden)
       .then((docRef) => {
         setOrdenId(docRef.id);
-        vaciarCarrito;
+        vaciarCarrito();
       })
       .catch((error) => {
         console.log("Error al crear la orden", error);
         setError("Se produjo un error al crear la orden");
       });
+  };
+
+  const [showModal, setShowModal] = useState(false); // Estado para controlar la visibilidad del modal
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleShowModal = () => {
+    setShowModal(true);
   };
 
   return (
@@ -60,8 +71,7 @@ const Checkout = () => {
         {carrito.map((producto) => (
           <div key={producto.item.id}>
             <p>
-              {" "}
-              {producto.item.nombre} x {producto.cantidad}{" "}
+              {producto.item.nombre} x {producto.cantidad}
             </p>
             <p> $ {producto.item.precio} </p>
             <hr />
@@ -71,7 +81,7 @@ const Checkout = () => {
         <hr />
 
         <div className="form-group">
-          <label htmlFor=""> Nombre </label>
+          <label htmlFor="">Nombre</label>
           <input
             type="text"
             value={nombre}
@@ -80,7 +90,7 @@ const Checkout = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor=""> Apellido </label>
+          <label htmlFor="">Apellido</label>
           <input
             type="text"
             value={apellido}
@@ -89,7 +99,7 @@ const Checkout = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor=""> Teléfono </label>
+          <label htmlFor="">Teléfono</label>
           <input
             type="text"
             value={telefono}
@@ -98,7 +108,7 @@ const Checkout = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor=""> Email </label>
+          <label htmlFor="">Email</label>
           <input
             type="text"
             value={email}
@@ -107,7 +117,7 @@ const Checkout = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor=""> Confirmación de Email </label>
+          <label htmlFor="">Confirmación de Email</label>
           <input
             type="email"
             value={emailConf}
@@ -115,17 +125,31 @@ const Checkout = () => {
           />
         </div>
 
-        {error && <p style={{ color: "#c11077" }}> {error} </p>}
-
-        <button className="miBtn" type="submit"> Finalizar Compra </button>
+        {error && <p style={{ color: "#c11077" }}>{error}</p>}
+  
+        <button className="miBtn" type="submit">Finalizar Compra</button>
       </form>
+
       {ordenId && (
-        <strong>
-          Gracias por tu compra!. Tu número de orden es {ordenId}{" "}
-        </strong>
+        <div className="fixed-bottom w-100 d-flex justify-content-center">
+          <Button variant="primary" onClick={handleShowModal}>Ver número de pedido</Button>
+          <Modal show={showModal} onHide={handleCloseModal} centered>
+            <Modal.Header closeButton>
+              <Modal.Title>Gracias por tu compra!</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Tu número de pedido es: {ordenId}
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseModal}>Cerrar</Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
       )}
     </div>
   );
 };
+
+
 
 export default Checkout;

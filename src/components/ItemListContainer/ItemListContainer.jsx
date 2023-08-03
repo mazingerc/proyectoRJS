@@ -1,23 +1,7 @@
-// import './ItemListContainer.css'
-
-// const ItemListContainer = ( {mensaje} ) => {
-
-//     return (
-//         <div className="list_container">
-//             <h2>NBA Caps import</h2>
-//             <hr/>
-
-//             <p>{mensaje}</p>
-//         </div>
-//     )
-// }
-
-// export default ItemListContainer
-
 import { useState, useEffect } from "react"
 import ItemList from "../ItemList/ItemList"
 import { useParams } from "react-router-dom"
-import { db } from "../services/firebase"
+import { db } from "../services/config"
 import { collection, getDocs, where, query } from "firebase/firestore"
 
 const ItemListContainer = (props) => {
